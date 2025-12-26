@@ -1,0 +1,44 @@
+- name: coreutils
+  hosts: localhost
+  vars:
+    rustup_install_script: "rustup_install.sh"
+  tasks:
+   - name: Prerequisites
+     become: true
+     tags:
+       - prereq
+     dnf:
+       name:
+         - autoconf
+         - automake
+         - bison
+         - gettext
+         - git
+         - gperf
+         - gzip
+         - help2man
+         - m4
+         - make
+         - perl
+         - tar
+         - texinfo
+         - wget
+         - xz
+         - python3-pip
+   - name: Install rustup
+     tags:
+       - rustup
+     shell: |
+       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs >{{ rustup_install_script }}
+       chmod u+x {{ rustup_install_script }}
+       ./{{ rustup_install_script }} -y
+   - name: Pre-commit
+     become: true
+     tags:
+       - pre-commit
+     pip:
+       name: pre-commit
+  post_tasks:
+    - name: Cleanup
+      shell: |
+        rm -f {{ rustup_install_script }}
