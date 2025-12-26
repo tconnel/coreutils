@@ -4160,6 +4160,7 @@ name = "uu_yes"
 version = "0.5.0"
 dependencies = [
  "clap",
+ "codspeed-divan-compat",
  "fluent",
  "itertools 0.14.0",
  "nix",

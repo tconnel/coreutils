@@ -32,3 +32,10 @@ uucore = { workspace = true, features = ["pipes"] }
 [[bin]]
 name = "yes"
 path = "src/main.rs"
+
+[dev-dependencies]
+divan = { workspace = true }
+
+[[bench]]
+name = "yes_bench"
+harness = false
